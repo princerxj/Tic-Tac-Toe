@@ -2,6 +2,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 nav {
@@ -57,18 +58,6 @@ nav ul {
     text-align: center;
 }
 
-#start-game {
-    margin-top: 20px;
-}
-
-#start-game:hover {
-    color: burlywood;
-}
-
-.start-container {
-    text-align: center;
-}
-
 .start-container h1 {
     font-size: 3rem;
     margin-bottom: 20px;
@@ -81,7 +70,7 @@ nav ul {
 }
 
 #start-game {
-    padding: 10px 20px;
+    padding: 12px 24px;
     background-color: #8c6a8c;
     border: none;
     border-radius: 8px;
@@ -89,23 +78,18 @@ nav ul {
     font-weight: bold;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 #start-game:hover {
     background-color: #6d4b6d;
-    transform : scale(1.5);
+    transform: scale(1.15);
 }
 
 #selectmode {
     margin-top: 20px;
-    font-family: 'Roboto' sans-serif;
-    font-weight: bolder;
-}
-
-/* Hidden by default */
-.hidden {
-    display: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 
 /* Game page styling */
@@ -130,6 +114,7 @@ nav ul {
     grid-template-rows: repeat(3, 10vw);
     font-family: 'Roboto', sans-serif;
     position: relative;
+    gap: 5px;
 }
 
 .box {
@@ -140,20 +125,28 @@ nav ul {
     justify-content: center;
     align-items: center;
     z-index: 1;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
 .box:hover {
     background-color: rgb(204, 195, 212);
 }
 
+.box:active {
+    transform: scale(0.95);
+}
+
 /* Game info styling */
 .info {
     font-size: 22px;
+    margin-top: 20px;
+    text-align: center;
 }
 
 .gameInfo {
     padding: 0 34px;
     font-family: 'Baloo Bhaina 2', cursive;
+    text-align: center;
 }
 
 .gameInfo h1 {
@@ -181,28 +174,43 @@ nav ul {
     border-bottom: 0;
 }
 
-/* Reset button styling */
-#reset {
-    margin: 0 23px;
-    padding: 1px 18px;
-    background: #8c6a8c;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 15px;
-    font-weight: bolder;
+/* Winner overlay specific to the grid area */
+.winner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2; /* Ensure it's above the game boxes */
 }
 
-/* Back to Menu button styling */
-#back-to-menu {
+.winner-overlay p {
+    font-size: 4rem;
+    color: white;
+    font-family: 'Baloo Bhaina 2', cursive;
+}
+
+/* Reset and Back to Menu button styling */
+#reset, #back-to-menu {
     margin: 0 23px;
-    padding: 1px 18px;
+    padding: 10px 20px;
     background: #8c6a8c;
     border-radius: 6px;
     cursor: pointer;
     font-family: 'Courier New', Courier, monospace;
     font-size: 15px;
-    font-weight: bolder;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#reset:hover, #back-to-menu:hover {
+    background-color: #6d4b6d;
+    transform: scale(1.15);
 }
 
 /* Line for winning strike */
@@ -244,9 +252,16 @@ nav ul {
     transform: rotate(-45deg);
 }
 
+/* Responsive adjustments */
 @media screen and (max-width: 800px) {
     .gameContainer {
-        flex-wrap: wrap;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 50px; 
+        transform: scale(1.1); 
+        transform-origin: center; 
     }
 
     .gameInfo {
@@ -258,8 +273,8 @@ nav ul {
     }
 
     .container {
-        grid-template-columns: repeat(3, 20vw);
-        grid-template-rows: repeat(3, 20vw);
+        grid-template-columns: repeat(3, 30vw);
+        grid-template-rows: repeat(3, 30vw);
     }
 
     .start-container h1 {
@@ -275,13 +290,17 @@ nav ul {
         width: 150px;
     }
 
-    #back-to-menu {
+    #back-to-menu, #reset {
         padding: 8px 12px;
         font-size: 12px;
     }
 
-    #reset {
-        padding: 8px 12px;
-        font-size: 12px;
+    .box {
+        font-size: 10vw; 
+        padding: 10px; 
+    }
+
+    .winner-overlay p {
+        font-size: 3rem;
     }
 }
