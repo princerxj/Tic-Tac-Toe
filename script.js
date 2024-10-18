@@ -41,8 +41,53 @@ const checkWin = () => {
             document.querySelector(".line").style.transform = `translate(${e[3]}vw, ${e[4]}vw) rotate(${e[5]}deg)`;
             document.querySelector(".line").style.width = "20vw"; // Adjust length as needed
             gameover.play();
+
+            // Create the overlay for the grid area
+            let gridContainer = document.querySelector('.container');
+            let overlay = document.createElement('div');
+            overlay.classList.add('winner-overlay');
+            
+            let winnerMessage = document.createElement('p');
+            winnerMessage.innerText = `${boxtext[e[0]].innerText} Wins!`;
+            
+            overlay.appendChild(winnerMessage);
+            gridContainer.appendChild(overlay); // Add overlay to the grid area
         }
     });
+
+    // Check for a tie if there's no winner and all boxes are filled
+    let isTie = true;
+    Array.from(boxtext).forEach(element => {
+        if (element.innerText === "") {
+            isTie = false; // If there's an empty box, it's not a tie
+        }
+    });
+
+    if (isTie && !isgameover) {
+        document.querySelector('.info').innerText = "It's a Tie!";
+        isgameover = true;
+        gameover.play();
+        setTimeout(() => {
+            showOverlay("It's a Tie!");
+        }, 1000);
+    }
+}
+
+// Function to show the overlay
+const showOverlay = (message) => {
+    const overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+
+    // Add the winner message
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('winner-message');
+    messageDiv.innerText = message;
+
+    // Append the message to the overlay
+    overlay.appendChild(messageDiv);
+
+    // Append the overlay to the body
+    document.body.appendChild(overlay);
 }
 
 // AI logic to make a random move
@@ -101,6 +146,12 @@ reset.addEventListener('click', () => {
     document.querySelector(".line").style.transform = "none"; // Reset the transform
     document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
     document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "0px";
+    
+    // Remove the overlay if it exists
+    let existingOverlay = document.querySelector('.winner-overlay');
+    if (existingOverlay) {
+        existingOverlay.remove();
+    }
 });
 
 // Add onclick listener to back to menu button
@@ -116,6 +167,12 @@ document.getElementById('back-to-menu').addEventListener('click', () => {
     document.querySelector(".line").style.transform = "none"; // Reset the transform
     document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
     document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "0px";
+
+    // Remove the overlay if it exists
+    const existingOverlay = document.querySelector('.overlay');
+    if (existingOverlay) {
+        existingOverlay.remove();
+    }
 
     // Show start page and hide game page
     document.getElementById('game-page').classList.remove('active');
@@ -144,3 +201,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });   
 });
+
