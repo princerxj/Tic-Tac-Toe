@@ -134,8 +134,8 @@ Array.from(boxes).forEach(element => {
     });
 });
 
-// Add onclick listener to reset button 
-reset.addEventListener('click', () => {
+// Function to reset the game
+const resetGame = () => {
     let boxtexts = document.querySelectorAll('.boxtext');
     Array.from(boxtexts).forEach(element => {
         element.innerText = "";
@@ -146,33 +146,20 @@ reset.addEventListener('click', () => {
     document.querySelector(".line").style.transform = "none"; // Reset the transform
     document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
     document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "0px";
-    
+
     // Remove the overlay if it exists
     let existingOverlay = document.querySelector('.winner-overlay');
     if (existingOverlay) {
         existingOverlay.remove();
     }
-});
+};
 
-// Add onclick listener to back to menu button
+// Add onclick listener to reset button
+reset.addEventListener('click', resetGame);
+
+// Add onclick listener to "Back to Menu" button
 document.getElementById('back-to-menu').addEventListener('click', () => {
-    // Reset game variables
-    let boxtexts = document.querySelectorAll('.boxtext');
-    Array.from(boxtexts).forEach(element => {
-        element.innerText = "";
-    });
-    turn = "X";
-    isgameover = false;
-    document.querySelector(".line").style.width = "0vw"; // Hide the winning line
-    document.querySelector(".line").style.transform = "none"; // Reset the transform
-    document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
-    document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "0px";
-
-    // Remove the overlay if it exists
-    const existingOverlay = document.querySelector('.overlay');
-    if (existingOverlay) {
-        existingOverlay.remove();
-    }
+    resetGame(); // Reset the game before going back to the menu
 
     // Show start page and hide game page
     document.getElementById('game-page').classList.remove('active');
