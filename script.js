@@ -5,6 +5,7 @@ let audioTurn = new Audio("Assets/ting.mp3");
 let gameover = new Audio("Assets/gameover.mp3");
 let turn = "X";
 let isgameover = false;
+let startingPlayer = "X";
 let mode = 'friend'; // Default to friend mode
 
 // Function to change the turn 
@@ -140,7 +141,7 @@ const resetGame = () => {
     Array.from(boxtexts).forEach(element => {
         element.innerText = "";
     });
-    turn = "X";
+    turn = startingPlayer;
     isgameover = false;
     document.querySelector(".line").style.width = "0vw"; // Hide the winning line
     document.querySelector(".line").style.transform = "none"; // Reset the transform
@@ -152,6 +153,9 @@ const resetGame = () => {
     if (existingOverlay) {
         existingOverlay.remove();
     }
+
+    // Alternate starting player for the next game 
+    startingPlayer = (startingPlayer === "X") ? "0" : "X";
 };
 
 // Add onclick listener to reset button
